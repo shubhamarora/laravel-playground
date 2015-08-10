@@ -39,7 +39,13 @@ class TagsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tag = new Tag;
+        $tag->tagname = $request->get('tagname');
+        $saveStatus = $tag->save();
+
+        if(!$saveStatus) {
+            abort(500,'Some error occurred while saving tag data');
+        }
     }
 
     /**
@@ -73,7 +79,7 @@ class TagsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
     }
 
     /**

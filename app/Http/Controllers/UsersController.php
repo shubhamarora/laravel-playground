@@ -38,7 +38,14 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        return "store reached";
+
+        $user = new User;
+        $user->fullname = $request->get('fullname');
+        $saveStatus = $user->save();
+
+        if(!$saveStatus) {
+            abort(500,'Some error occurred while saving user data');
+        }
     }
 
     /**
