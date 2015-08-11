@@ -4,91 +4,142 @@
 
 $(document).ready(function() {
 
-    $("#add-user-btn").on("click",function() {
+    $(".submit-data-btn").on("click", function (event) {
+        event.preventDefault();
         var name = $("#input-data").val();
-        if(name!="") {
-            $("#ack-msg").empty().append("Saving your entry ..");
-            $.ajax({
-                url:"/users",
-                type:"POST",
-                data:{fullname:name},
-                success:function(response) {
-                    $("#ack-msg").empty().append("Success!");
-                    console.log(response);
-                },
-                error: function (response) {
-                    $("#ack-msg").empty().append("Some Error Occurred.");
-                    console.log(response);
-                }
-            });
+        var saveAction = $(this).data("save-action");
+        if (name != "") {
+            switch (saveAction) {
+                case 'edit-user-name':
+                    EditUserName();
+                    break;
+                case 'add-user-name':
+                    AddUserName();
+                    break;
+                case 'edit-tag-name':
+                    EditTagName();
+                    break;
+                case 'add-tag-name':
+                    AddTagName();
+                    break;
+            }
         }
         else {
             $("#ack-msg").empty().append("Field is mandatory");
         }
-    });
+    })
 
-    $("#add-tag-btn").click(function () {
+    function AddUserName() {
         var name = $("#input-data").val();
-        if(name!="") {
-            $("#ack-msg").empty().append("Saving your entry ..");
-            $.ajax({
-                url:"/tags",
-                type:"POST",
-                data:{tagname:name},
-                success:function(response) {
-                    $("#ack-msg").empty().append("Success!");
-                    console.log(response);
-                },
-                error: function (response) {
-                    $("#ack-msg").empty().append("Some Error Occurred.");
-                    console.log(response);
-                }
-            });
-        }
-        else {
-            $("#ack-msg").empty().append("Field is mandatory");
-        }
-    });
+        var _token = $("#_token").val();
+        $("#ack-msg").empty().append("Saving your entry ..");
+        $.ajax({
+            url: "/users",
+            type: "POST",
+            data: {fullname: name,_token:_token},
+            success: function (response) {
+                $("#ack-msg").empty().append("Success!");
+                console.log(response);
+            },
+            error: function (response) {
+                $("#ack-msg").empty().append("Some Error Occurred.");
+                console.log(response);
+            }
+        });
+    }
 
-    // Loads user modal pop-up with the data in data
-    // attributes when user clicks on edit.
+    function EditUserName() {
+        var name = $("#input-data").val();
+        var _token = $("#_token").val();
+        $("#ack-msg").empty().append("Saving your entry ..");
+        $.ajax({
+            url: "/users/"+$(".submit-data-btn").data("id"),
+            type: "PUT",
+            data: {fullname: name,_token:_token},
+            success: function (response) {
+                $("#ack-msg").empty().append("Success!");
+                console.log(response);
+            },
+            error: function (response) {
+                $("#ack-msg").empty().append("Some Error Occurred.");
+                console.log(response);
+            }
+        });
+    }
+
+    function AddTagName() {
+        var name = $("#input-data").val();
+        var _token = $("#_token").val();
+        $("#ack-msg").empty().append("Saving your entry ..");
+        $.ajax({
+            url: "/tags",
+            type: "POST",
+            data: {tagname: name,_token:_token},
+            success: function (response) {
+                $("#ack-msg").empty().append("Success!");
+                console.log(response);
+            },
+            error: function (response) {
+                $("#ack-msg").empty().append("Some Error Occurred.");
+                console.log(response);
+            }
+        });
+    }
+
+    function EditTagName() {
+        var name = $("#input-data").val();
+        var _token = $("#_token").val();
+        $("#ack-msg").empty().append("Saving your entry ..");
+        $.ajax({
+            url: "/tags/"+$(".submit-data-btn").data("id"),
+            type: "PUT",
+            data: {tagname: name,_token:_token},
+            success: function (response) {
+                $("#ack-msg").empty().append("Success!");
+                console.log(response);
+            },
+            error: function (response) {
+                $("#ack-msg").empty().append("Some Error Occurred.");
+                console.log(response);
+            }
+        });
+    }
+
+    // Below attached events will load the modal with existing data (from html5 data attribute)
+    // which is to be updated and update the modal with it respectively. This is done so as to
+    // use the same modal pop-up for all the purpose - Add/edit user, add/edit tag.
 
     $(".edit-name").click(function () {
-        $("#input-data").val('');  // empty modal input value
-        $('.common-modal').modal('show');  // Load user modal pop-up
+        $("#input-data").val($(this).data("name"));
         $(".modal-title").empty().append("Update User name");
-        $(".submit-data-btn").empty().append("Update");
-        $(".submit-data-btn").attr("id","edit-user-btn");
-        console.log($(this).data('id'));
+        $(".submit-data-btn").empty().append("Update").attr("data-save-action","edit-user-name").attr("data-id",$(this).data('id'));
+        $('.common-modal').modal('show');
     });
 
-    // Loads tag modal pop-up  with the data in data
-    // attributes when user clicks on edit.
-
     $(".edit-tag").click(function () {
-        $("#input-data").val('');  // empty modal input value
-        $('.common-modal').modal('show');  // Load Tag modal pop-up
+        $("#input-data").val($(this).data("name"));
         $(".modal-title").empty().append("Update Tag name");
-        $(".submit-data-btn").empty().append("Update");
-        $(".submit-data-btn").attr("id","edit-tag-btn");
-        console.log($(this).data('id'));
+        $(".submit-data-btn").empty().append("Update").attr("data-save-action","edit-tag-name").attr("data-id",$(this).data('id'));
+        $('.common-modal').modal('show');
     });
 
     $(".add-user").click(function () {
-        $("#input-data").val('');  // empty modal input value
-        $(".common-modal").modal('show');  // Load Tag modal pop-up
         $(".modal-title").empty().append("Add User");
-        $(".submit-data-btn").empty().append("Add");
-        $(".submit-data-btn").attr("id","add-user-btn");
+        $(".submit-data-btn").empty().append("Add").attr("data-save-action","add-user-name");
+        $('.common-modal').modal('show');
     });
 
     $(".add-tag").click(function () {
-        $("#input-data").val('');  // empty modal input value
-        $('.common-modal').modal('show');  // Load Tag modal pop-up
         $(".modal-title").empty().append("Add Tag name");
-        $(".submit-data-btn").empty().append("Add");
-        $(".submit-data-btn").attr("id","add-tag-btn");
-
+        $(".submit-data-btn").empty().append("Add").attr("data-save-action","add-tag-name");
+        $('.common-modal').modal('show');
     });
+
+    // clear input value and acknowledge message when modal is dismissed.
+
+    $('.common-modal').on('hidden.bs.modal', function () {
+        $(".ack-msg").empty();
+        $("#input-data").val('');
+    })
 
 });

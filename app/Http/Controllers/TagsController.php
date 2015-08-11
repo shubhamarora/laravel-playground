@@ -79,7 +79,13 @@ class TagsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $tag = Tag::find($id);
+        $tag->tagname = $request->get('tagname');
+        $updateStatus = $tag->save();
 
+        if(!$updateStatus) {
+            abort(500,'Some error occurred while saving user data');
+        }
     }
 
     /**

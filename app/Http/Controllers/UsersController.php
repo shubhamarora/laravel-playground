@@ -79,7 +79,13 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->fullname = $request->get('fullname');
+        $updateStatus = $user->save();
+
+        if(!$updateStatus) {
+            abort(500,'Some error occurred while saving user data');
+        }
     }
 
     /**

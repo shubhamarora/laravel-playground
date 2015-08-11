@@ -54,10 +54,11 @@
             </div>
             <div class="modal-body">
                 <input type="text" class="form-control" placeholder="Enter Value" id="input-data">
+                <input type="hidden" name="_token" id="_token" value="<?=csrf_token();?>" />
             </div>
             <div class="modal-footer">
                 <span class="pull-left" id="ack-msg"></span>
-                <button type="button" class="btn btn-default submit-data-btn">Save</button>
+                <button type="button" class="btn btn-default submit-data-btn" data-save-action="" data-id="">Save</button>
             </div>
         </div>
     </div>

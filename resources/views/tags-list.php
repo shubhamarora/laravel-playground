@@ -42,8 +42,8 @@
         </div>
     </div>
 </div>
-<!-- Add modal window -->
-<div class="modal fade tag-modal" tabindex="-1" role="dialog">
+<!-- Add user modal window -->
+<div class="modal fade common-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,11 +51,12 @@
                 <h4 class="modal-title">Tag</h4>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control" placeholder="Tag Name" id="tag-name">
+                <input type="text" class="form-control" placeholder="Enter Value" id="input-data">
+                <input type="hidden" name="_token" id="_token" value="<?=csrf_token();?>" />
             </div>
             <div class="modal-footer">
                 <span class="pull-left" id="ack-msg"></span>
-                <button type="button" class="btn btn-default" id="save-tag-button">Save</button>
+                <button type="button" class="btn btn-default submit-data-btn" data-save-action="" data-id="">Save</button>
             </div>
         </div>
     </div>
