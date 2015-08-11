@@ -18,4 +18,4 @@ DB_PASSWORD=
 `php artisan key:generate`
 
 7. Start Laravel Development server usin below command.
-`php artisan serve'
+`php artisan serve`
