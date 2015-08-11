@@ -14,9 +14,3 @@
 Route::get('/', 'UsersController@index');
 Route::resource('tags','TagsController');
 Route::resource('users','UsersController');
-
-Route::get('/user',function() {
-//    $abc = DB::table('users')->where('_id','1')->get();
-    $abc = \App\User::find(1);
-    return $abc;
-});
