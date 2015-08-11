@@ -11,11 +11,11 @@ DB_PASSWORD=
 ```
 
 
-5. Install dependencies using below command.
+5. Install dependencies using following command.
 `composer install`
 
-6. Generate App Key using below command.
+6. Generate App Key using following command.
 `php artisan key:generate`
 
-7. Start Laravel Development server usin below command.
+7. Start Laravel Development server using following command.
 `php artisan serve`
