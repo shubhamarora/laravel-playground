@@ -14,3 +14,4 @@
 Route::get('/', 'UsersController@index');
 Route::resource('tags','TagsController');
 Route::resource('users','UsersController');
+Route::get('relation/{id}','RelationshipController@show');

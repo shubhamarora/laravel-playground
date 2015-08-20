@@ -8,8 +8,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Model;
 
-class Relationship
+class Relationship extends Model
 {
     /**
      * Indicates if the model should be timestamped.
@@ -22,7 +23,7 @@ class Relationship
      * Primary key column name
      * @var string
      */
-    protected $primaryKey = 'current_userid';
+    protected $primaryKey = 'current_user_id';
 
     /**
      * The database table used by this model.
