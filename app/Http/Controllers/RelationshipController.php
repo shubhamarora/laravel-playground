@@ -39,7 +39,25 @@ class RelationshipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $currentUserId = $request->get('current-user-id');
+        $tagName = $request->get('tag-name');
+        $relativeUserId = $request->get('user-id');
+
+        $stmt = "INSERT INTO `user_relationship` (`current_user_id`, tag, `related_user_id`)
+        SELECT * FROM (SELECT '$currentUserId', '$tagName', '$relativeUserId') AS tmp
+        WHERE NOT EXISTS (
+                SELECT `current_user_id` FROM `user_relationship` WHERE current_user_id = '$currentUserId' AND `related_user_id` = '$relativeUserId'
+        ) LIMIT 1";
+
+        $pdo = DB::connection()->getPdo();
+        $result = $pdo->query($stmt);
+
+        if($stmt) {
+            return "Success";
+        }
+        else {
+            abort(500,'Some error has been occurred');
+        }
     }
 
     /**
@@ -51,41 +69,33 @@ class RelationshipController extends Controller
     public function show($id)
     {
 
-        $sqlQuery = "SELECT ur.`current_user_id`, u.`fullname`, ur.`related_user_id`, u1.`fullname`
+        $stmt = "SELECT ur.`current_user_id` as `userid`, u.`fullname` as `username`,
+                     ur.`tag` as `relationshipTag`, ur.`related_user_id` as `relativeUserId`,
+                     u1.`fullname` as `relativeUserName`
                      FROM `user_relationship` ur
                      JOIN `users` u ON u.`_id` = ur.`current_user_id`
                      JOIN `users` u1 ON u1.`_id` = ur.`related_user_id`
                      WHERE ur.`current_user_id` = '$id' OR ur.`related_user_id` = '$id'";
 
         $pdo = DB::connection()->getPdo();
-        $stmt = $pdo->query($sqlQuery);
+        $result = $pdo->query($stmt);
 
         $userUserMapping = array();
-        $userNameMapping = array();
 
-        while($row = $stmt->fetch()) {
+        while($row = $result->fetch($pdo::FETCH_ASSOC)) {
 
             // discard reverse relation and give advantage to
             // current user to relative user relation
-            if(isset($userUserMapping[$row[2]])) {
-                if($userUserMapping[$row[2]] == $row[0]) {
+            if(isset($userUserMapping[$row['relativeUserId']])) {
+                if($userUserMapping[$row['relativeUserId']]['relativeUserId']==$row['userid']) {
                     continue;
                 }
             }
 
-            $userUserMapping[$row[0]] = $row[2];
-
-            // isset is faster than array_key_exist for more check
-            // here - http://php.net/manual/en/function.array-key-exists.php#107786
-            if(!isset($userNameMapping[$row[0]])) {
-                $userNameMapping[$row[0]] = $row[1];
-            }
-            if(!isset($userNameMapping[$row[2]])) {
-                $userNameMapping[$row[2]] = $row[3];
-            }
+            $userUserMapping[$row['userid']] = $row;
         }
-
-        return View('user-relation',[]);
+        return View('user-relation',['currentUserId'=>$id,'userUserMapping'=>$userUserMapping]);
+//        var_dump($userUserMapping);
     }
 
     /**

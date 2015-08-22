@@ -35,8 +35,8 @@
                 <tr>
                     <td><?=++$i; ?></td>
                     <td><?=$user->fullname; ?></td>
-                    <td class="edit-name" data-id="<?=$user->_id?>" data-name="<?=$user->fullname;?>">Edit</td>
-                    <td>Add Relation</td>
+                    <td class="edit-name" data-id="<?=$user->_id?>" data-name="<?=$user->fullname;?>"><a href="#" >Edit</a></td>
+                    <td><a href="relation/<?=$user->_id?>" >Add Relation</a></td>
                 </tr>
                 <?php } ?>
             </table>

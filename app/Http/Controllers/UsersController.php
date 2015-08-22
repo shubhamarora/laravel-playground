@@ -21,6 +21,17 @@ class UsersController extends Controller
     }
 
     /**
+     * search tag from database on the basis of query string
+     *
+     * @return search result from database in json format
+     */
+    public function searchUser($q) {
+        $q = '%'.$q.'%';
+        $users = User::where('fullname','like',$q)->get();
+        return json_encode($users);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

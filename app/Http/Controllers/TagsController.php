@@ -22,6 +22,17 @@ class TagsController extends Controller
     }
 
     /**
+     * search tag from database on the basis of query string
+     *
+     * @return search result from database in json format
+     */
+    public function searchTag($q) {
+        $q = '%'.$q.'%';
+        $tags = Tag::where('tagname','like',$q)->get();
+        return json_encode($tags);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return Response

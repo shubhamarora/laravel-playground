@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2015 at 10:44 PM
+-- Generation Time: Aug 22, 2015 at 10:06 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `_id` int(3) NOT NULL AUTO_INCREMENT,
   `fullname` varchar(80) NOT NULL,
   PRIMARY KEY (`_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
@@ -59,8 +59,10 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`_id`, `fullname`) VALUES
 (1, 'Shubham Arora'),
 (2, 'Jatin'),
-(3, 'jhbsdhjcv'),
-(4, 'hahaha');
+(3, 'Vaibhav'),
+(4, 'hahaha'),
+(5, 'yoyoyo'),
+(6, 'hey');
 
 -- --------------------------------------------------------
 
@@ -70,7 +72,7 @@ INSERT INTO `users` (`_id`, `fullname`) VALUES
 
 CREATE TABLE IF NOT EXISTS `user_relationship` (
   `current_user_id` int(3) NOT NULL,
-  `tagid` int(2) NOT NULL,
+  `tag` varchar(15) NOT NULL,
   `related_user_id` int(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -78,9 +80,13 @@ CREATE TABLE IF NOT EXISTS `user_relationship` (
 -- Dumping data for table `user_relationship`
 --
 
-INSERT INTO `user_relationship` (`current_user_id`, `tagid`, `related_user_id`) VALUES
-(1, 1, 2),
-(2, 1, 1);
+INSERT INTO `user_relationship` (`current_user_id`, `tag`, `related_user_id`) VALUES
+(1, 'brother', 2),
+(2, 'brother', 1),
+(3, 'brother', 1),
+(3, 'brother', 4),
+(1, 'Brother', 4),
+(1, 'Brother', 5);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

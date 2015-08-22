@@ -12,6 +12,12 @@
 */
 
 Route::get('/', 'UsersController@index');
-Route::resource('tags','TagsController');
 Route::resource('users','UsersController');
+Route::get('usersearch/{q}','UsersController@searchUser');
+
+Route::resource('tags','TagsController');
+Route::get('tagsearch/{q}','TagsController@searchTag');
+
 Route::get('relation/{id}','RelationshipController@show');
+Route::post('relation','RelationshipController@store');
+

@@ -109,7 +109,8 @@ $(document).ready(function() {
     // which is to be updated and update the modal with it respectively. This is done so as to
     // use the same modal pop-up for all the purpose - Add/edit user, add/edit tag.
 
-    $(".edit-name").click(function () {
+    $(".edit-name").click(function (event) {
+        event.preventDefault();
         $("#input-data").val($(this).data("name"));
         $(".modal-title").empty().append("Update User name");
         $(".submit-data-btn").empty().append("Update").attr("data-save-action","edit-user-name").attr("data-id",$(this).data('id'));

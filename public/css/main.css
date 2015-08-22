@@ -1,3 +1,26 @@
 .edit-tag, .edit-name {
     cursor:pointer;
 }
+.typi-suggestion {
+    position: absolute;
+    top: 93%;
+    width: 100%;
+}
+.typi-suggestion ul {
+    padding: 0;
+    border: 1px solid #e3e3e3;
+    box-shadow: 0 0 15px #a9a9a9;
+}
+.typi-suggestion li {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #e3e3e3;
+    padding: 5px 0 5px 10px;
+    list-style-type: none;
+    background-color: #ffffff;
+    cursor: pointer;
+}
+.typi-suggestion li:hover {
+    background-color: #4396ff;
+    color: #ffffff;
+}
